@@ -2,14 +2,13 @@
 
 ## Project Overview
 A powerful, feature-rich SQL query editor application built with modern web technologies, designed to enhance developer productivity and provide a seamless query writing experience.
+Can add to regular Queries by history add button,
 
--Can add to regular Queries by history add button,
--
 
 ## Screenshot
 
 - ![Frontend](./src/assets/image2.png/) 
-- ![Responsive](./src/assets/image3.png/) 
+- ![responsive for all device](./src/assets/image3.png/) 
 
 
 
@@ -65,7 +64,8 @@ A powerful, feature-rich SQL query editor application built with modern web tech
 
 ## Performance Metrics
 - Initial Load Time Optimization: 86% → 96%
-- ![Lighthouse Score](./src/assets/image.png/) 
+- ![Lighthouse Score](./src/assets/image.png/)
+  
 - ![Score](./src/assets/image1.png/) 
 
 ## Challenges Overcome
