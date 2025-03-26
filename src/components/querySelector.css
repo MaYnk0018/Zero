@@ -1,10 +1,9 @@
-/* File 2: Query Selector Styles */
 * {
   font-family: 'Poppins', sans-serif;
 }
 
 .query-selector {
-  background-color: #DFF2EB; /* light background tone */
+  background-color: #DFF2EB;
   padding: 16px;
 }
 
@@ -13,7 +12,7 @@
   color: #333;
   margin-bottom: 12px;
   font-size: 1.2rem;
-  border-bottom: 2px solid #4A628A; /* primary accent */
+  border-bottom: 2px solid #4A628A; 
   padding-bottom: 8px;
 }
 
@@ -36,7 +35,7 @@
 }
 
 .query-selector-button {
-  background-color: #4A628A; /* primary accent */
+  background-color: #4A628A; 
   color: white;
   border: none;
   padding: 8px 12px;
@@ -45,7 +44,7 @@
 }
 
 .query-selector-button:hover {
-  background-color: #7AB2D3; /* complementary tone */
+  background-color: #7AB2D3; 
 }
 
 .query-history-section {

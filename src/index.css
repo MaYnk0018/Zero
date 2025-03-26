@@ -17,10 +17,10 @@ html {
 
 .app-container {
   height: 100vh;
-  display: grid;
+  display: flex;
   overflow: hidden;
   grid-template-columns: 30% 70%;
-  grid-template-rows: 100%;
+  grid-template-rows: 100vh;
 }
 
 .sidebar {
@@ -32,8 +32,7 @@ html {
 }
 
 .main-content {
-  width: 100%;
-  max-width: 100%;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
   gap: 10px;
@@ -44,6 +43,7 @@ html {
   background-color: #4A628A; 
   grid-column: 2;
   grid-row: 1;
+  height: 50%;
 }
 
 .right-bottom {
@@ -51,10 +51,13 @@ html {
   grid-column: 2;
   grid-row: 2;
   overflow: auto;
+  height: 50%;
+
 }
 
 @media screen and (max-width: 768px) {
   .app-container {
+    display:grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
   }

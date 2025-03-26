@@ -1,10 +1,10 @@
-/* File 1: Query Editor Styles */
 * {
   font-family: 'Poppins', sans-serif;
 }
 
 .query-editor {
   display: flex;
+  flex-grow: initial;
   gap: 16px;
   padding: 16px;
   position: relative;
