@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useQueryContext } from '../context/queryContext';
-import './QueryEditor.css';
+import './queryEditor.css';
 
 
 interface CustomShortcut {
