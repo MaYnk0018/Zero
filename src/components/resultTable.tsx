@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useQueryContext } from '../context/queryContext';
 import { exportToCSV } from '../utility/dataProcessing';
-import './ResultTable.css';
+import './resultTable.css';
 
 const ResultTable: React.FC = () => {
   const { state } = useQueryContext();
