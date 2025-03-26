@@ -10,13 +10,4 @@ export const initialQueries: Query[] = [
       { id: 2, name: 'Jane Smith', total_purchases: 4500 },
     ]
   },
-  {
-    id: 'q2',
-    name: 'Product Sales by Category',
-    queryText: 'SELECT category, SUM(sales) as total_sales FROM products GROUP BY category',
-    sampleData: [
-      { category: 'Electronics', total_sales: 150000 },
-      { category: 'Clothing', total_sales: 75000 },
-    ]
-  }
 ];

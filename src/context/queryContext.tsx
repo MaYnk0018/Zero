@@ -2,7 +2,8 @@ import React, { createContext, useContext, useReducer } from 'react';
 import {
   QueryState,
   QueryAction,
-  QueryContextType
+  QueryContextType,
+  Query
 } from '../index';
 import { QuerySimulator, explainQuery } from '../utility/datagenerator';
 
@@ -18,14 +19,11 @@ const initialState: QueryState = {
 
 function queryReducer(state: QueryState, action: QueryAction): QueryState {
   switch (action.type) {
-    
+
     case 'SET_CURRENT_QUERY':
       console.log("action.payload", action.payload)
       const newQuery = action.payload;
-      const updatedHistory = [
-        newQuery,
-        ...state.queryHistory.filter(q => q.queryText !== newQuery?.queryText)
-      ].slice(0, 4);
+     
       // console.log("queryHistory", updatedHistory)
 
       return {
@@ -37,32 +35,52 @@ function queryReducer(state: QueryState, action: QueryAction): QueryState {
         // queryHistory: updatedHistory,
         error: null
       };
-
-
-      case 'RUN_QUERY': {
-        if (!state.currentQuery) {
-          return { ...state, error: 'No query to execute', isLoading: false };
-        }
+      case 'SET_QUERY_TEXT':
         
-        console.log('Current Query:', state.currentQuery);
-        const simulationResults = QuerySimulator.executeQuery(state.currentQuery);
-        console.log('Simulation Results:', simulationResults);
-      
-        
-        const updatedHistory = [
-          state.currentQuery,
-          ...state.queryHistory.filter(q => q.queryText !== state.currentQuery?.queryText)
-        ].slice(0, 4);
-      
+        const queryToSet: Query = typeof action.payload === 'string' 
+          ? { 
+              id: `temp-${Date.now()}`, 
+              name: 'Custom Query', 
+              queryText: action.payload, 
+              sampleData: [] 
+            }
+          : action.payload;
+  
         return {
           ...state,
-          results: simulationResults,
-          isLoading: false,
-          queryHistory: updatedHistory,
-          error: simulationResults.data.length === 0 ? 'No results found' : null
+          currentQuery: queryToSet,
+          queryExplanation: explainQuery(queryToSet.queryText),
+          queryHistory: [
+            queryToSet,
+            ...state.queryHistory.filter(q => q.queryText !== queryToSet.queryText)
+          ].slice(0, 4),
+          error: null
         };
+
+    case 'RUN_QUERY': {
+      if (!state.currentQuery) {
+        return { ...state, error: 'No query to execute', isLoading: false };
       }
-      
+
+      // console.log('Current Query:', state.currentQuery);
+      const simulationResults = QuerySimulator.executeQuery(state.currentQuery);
+      // console.log('Simulation Results:', simulationResults);
+
+
+      const updatedHistory = [
+        state.currentQuery,
+        ...state.queryHistory.filter(q => q.queryText !== state.currentQuery?.queryText)
+      ].slice(0, 4);
+
+      return {
+        ...state,
+        results: simulationResults,
+        isLoading: false,
+        queryHistory: updatedHistory,
+        error: simulationResults.data.length === 0 ? 'No results found' : null
+      };
+    }
+
 
     case 'SAVE_QUERY':
       return {

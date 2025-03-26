@@ -10,32 +10,34 @@ const ResultTable: React.FC = () => {
     if (!state.results) return null;
 
     return (
-      <div className="result-table">
-        <div className='table-wrapper'>
-        <table className="result-table-table">
-          <thead>
-            <tr>
-              {state.results.columns.map((col, idx) => (
-                <th key={idx} className="result-table-header">
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {state.results.data.map((row, rowIdx) => (
-              <tr key={rowIdx} className="result-table-row">
-                {state.results?.columns?.map((col, colIdx) => (
-                  <td key={colIdx} className="result-table-cell">
-                    {typeof row[col] === 'object' && row[col] !== null
-                      ? JSON.stringify(row[col])
-                      : row[col]}
-                  </td>
+      <div className='main-result-table'>
+        <div className="result-table">
+          {/* <div className='table-wrapper'> */}
+          <table className="result-table-table">
+            <thead>
+              <tr>
+                {state.results.columns.map((col, idx) => (
+                  <th key={idx} className="result-table-header">
+                    {col}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {state.results.data.map((row, rowIdx) => (
+                <tr key={rowIdx} className="result-table-row">
+                  {state.results?.columns?.map((col, colIdx) => (
+                    <td key={colIdx} className="result-table-cell">
+                      {typeof row[col] === 'object' && row[col] !== null
+                        ? JSON.stringify(row[col])
+                        : row[col]}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {/* </div> */}
         </div>
         <div className="result-table-footer">
           <span>Total Rows: {state.results.data.length}</span>

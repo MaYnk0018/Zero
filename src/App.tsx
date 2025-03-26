@@ -10,9 +10,6 @@ const App: React.FC = () => {
     <QueryProvider>
       <div className="app-container">
         <div className="sidebar">
-          <h2 className="sidebar-heading">
-            Query Library
-          </h2>
           <QuerySelector />
         </div>
         <div className="main-content">

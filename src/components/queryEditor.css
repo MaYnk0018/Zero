@@ -1,71 +1,169 @@
+/* File 1: Query Editor Styles */
+* {
+  font-family: 'Poppins', sans-serif;
+}
 
 .query-editor {
-    padding: 16px;
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  position: relative;
+}
+
+.query-editor-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.query-editor-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.query-editor-explanation {
+  background-color: #B9E5E8; /* lighter complementary tone */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.query-editor-button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #7AB2D3; /* primary accent */
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.query-editor-button:hover:not(:disabled) {
+  background-color: #4A628A; /* deeper accent for hover */
+}
+
+.query-editor-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.query-editor-loading {
+  margin-top: 10px;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #7AB2D3;
+  border-top: 3px solid #4A628A;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.query-editor-error {
+  margin-top: 10px;
+  color: red;
+  font-weight: bold;
+}
+
+.config-shortcuts-button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #B9E5E8;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.config-shortcuts-button:hover {
+  background-color: #4A628A;
+}
+
+.shortcuts-config {
+  background-color: #DFF2EB;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 16px;
+  height: max-content;
+  /* margin-top: 10px; */
+}
+
+.add-shortcut-form {
+  display: flex;
+  gap: 10px;
+  /* margin-bottom: 16px; */
+}
+
+.add-shortcut-form select,
+.add-shortcut-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.add-shortcut-form button {
+  padding: 8px 12px;
+  background-color: #7AB2D3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.shortcuts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #B9E5E8;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.shortcut-item button {
+  background-color: #4A628A;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.keyboard-shortcuts-hint {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #FFFFD0;;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .query-editor {
+    flex-direction: column;
+    width: calc(100vw - 50px);
   }
-  
-  
-  .query-editor-textarea {
+  .add-shortcut-form {
+    flex-direction: column;
+  }
+  .add-shortcut-form select,
+  .add-shortcut-form input,
+  .add-shortcut-form button {
     width: 100%;
-    min-height: 120px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-family: inherit;
-    resize: vertical;
   }
-  
-  
-  .query-editor-explanation {
-    background-color: #f0f4f8;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-    font-size: 0.9rem;
-  }
-  
-
-  .query-editor-button {
-    margin-top: 10px;
-    padding: 10px 15px;
-    font-size: 1rem;
-    background-color: #007acc;
-    border: none;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .query-editor-button:hover:not(:disabled) {
-    background-color: #005fa3;
-  }
-  
-  .query-editor-button:disabled {
-    background-color: #a0c4e3;
-    cursor: not-allowed;
-  }
-  
-
-  .query-editor-loading {
-    margin-top: 10px;
-    width: 20px;
-    height: 20px;
-    border: 3px solid #007acc;
-    border-top: 3px solid transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  
-
-  .query-editor-error {
-    margin-top: 10px;
-    color: red;
-    font-weight: bold;
-  }
-  
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
+}

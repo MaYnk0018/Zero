@@ -87,11 +87,11 @@ export function explainQuery(queryText?: string): string {
   }
 
   if (normalizedQuery.includes('group by')) {
-    return 'Groups data based on specified column(s), often used with aggregate functions.';
+    return 'Groups data based on specified column(s).';
   }
 
   if (normalizedQuery.includes('order by')) {
-    return 'Sorts the result set based on one or more columns in ascending or descending order.';
+    return 'Sorts the result set in ascending/descending order.';
   }
 
   return explanations[normalizedQuery] || 'Complex query analysis not available.';
