@@ -31,7 +31,7 @@ Can add to regular Queries by history add button,
 - Lightweight SVG icon usage
 - Optimized rendering with React hooks -> useMemo, usecallback
 - Efficient state management using React Context and useReducer
-- Significant performance improvements (86% to 93% load optimization)
+- Significant performance improvements (86% to 100% load optimization)
 
 ## Tech Stack
 - React
