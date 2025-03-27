@@ -7,17 +7,46 @@ import {
 } from '../data/defaultdataset';
 
 export class QuerySimulator {
- 
+  private static generateRepeatedData(originalData: any[], count: number = 50): any[] {
+    return Array.from({ length: count }, () => [...originalData]).flat().map((item, index) => {
+      const newItem = { ...item };
+      
+      if (newItem.customer_id) {
+        newItem.customer_id = `c${index + 1}`;
+      }
+      if (newItem.product_id) {
+        newItem.product_id = `p${index + 1}`;
+      }
+      if (newItem.sale_id) {
+        newItem.sale_id = `s${index + 1}`;
+      }
+      if (newItem.employee_id) {
+        newItem.employee_id = `e${index + 1}`;
+      }
+      
+      return newItem;
+    });
+  }
+
   private static datasets: { [key: string]: any[] } = {
-    customers: defaultCustomers,
-    products: defaultProducts,
-    sales: defaultSales,
-    employees: defaultEmployees
+    customers: this.generateRepeatedData(defaultCustomers, 50),
+    products: this.generateRepeatedData(defaultProducts, 50),
+    sales: this.generateRepeatedData(defaultSales, 50),
+    employees: this.generateRepeatedData(defaultEmployees, 50)
   };
+
+  static updateDatasets(count: number = 50) {
+    this.datasets = {
+      customers: this.generateRepeatedData(defaultCustomers, count),
+      products: this.generateRepeatedData(defaultProducts, count),
+      sales: this.generateRepeatedData(defaultSales, count),
+      employees: this.generateRepeatedData(defaultEmployees, count)
+    };
+  }
 
   static executeQuery(xc: Query): { columns: string[], data: any[] } {
     const { queryText } = xc;
-    console.log('Executing query:', queryText);
+    // console.log('Executing query:', queryText);
 
     try {
       const normalizedQuery = queryText.toLowerCase().trim();
@@ -53,7 +82,7 @@ export class QuerySimulator {
         resultData = resultData.slice(0, limitCount);
       }
 
-      console.log('Result data:', resultData);
+      // console.log('Result data:', resultData);
       return {
         columns: Object.keys(resultData[0] || {}),
         data: resultData

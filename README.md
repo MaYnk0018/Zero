@@ -64,9 +64,11 @@ Can add to regular Queries by history add button,
 
 ## Performance Metrics
 - Initial Load Time Optimization: 86% → 96%
-- ![Lighthouse Score](./src/assets/image.png/)
-  
-- ![Score](./src/assets/image1.png/) 
+- ![Lighthouse Score](./src/assets/image1.png/)
+- Optimized to
+- ![Score](./src/assets/image.png/) 
+- loading time using lighthouse
+- ![](./src/assets/image4.png/) 
 
 ## Challenges Overcome
 1. SEO and Page Load Optimization

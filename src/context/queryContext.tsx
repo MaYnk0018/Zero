@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import {
   QueryState,
   QueryAction,
@@ -19,53 +20,45 @@ const initialState: QueryState = {
 
 function queryReducer(state: QueryState, action: QueryAction): QueryState {
   switch (action.type) {
-
     case 'SET_CURRENT_QUERY':
-      console.log("action.payload", action.payload)
-      const newQuery = action.payload;
-     
-      // console.log("queryHistory", updatedHistory)
+      return {
+        ...state,
+        currentQuery: action.payload,
+        queryExplanation: action.payload?.queryText
+          ? explainQuery(action.payload.queryText)
+          : 'No query explanation available',
+        error: null
+      };
+
+    case 'SET_QUERY_TEXT':
+
+      const queryToSet: Query = typeof action.payload === 'string'
+        ? {
+          id: `temp-${Date.now()}`,
+          name: 'Custom Query',
+          queryText: action.payload,
+          sampleData: []
+        }
+        : action.payload;
 
       return {
         ...state,
-        currentQuery: newQuery,
-        queryExplanation: newQuery?.queryText
-          ? explainQuery(newQuery.queryText)
-          : 'No query explanation available',
-        // queryHistory: updatedHistory,
+        currentQuery: queryToSet,
+        queryExplanation: explainQuery(queryToSet.queryText),
+        queryHistory: [
+          queryToSet,
+          ...state.queryHistory.filter(q => q.queryText !== queryToSet.queryText)
+        ].slice(0, 4),
         error: null
       };
-      case 'SET_QUERY_TEXT':
-        
-        const queryToSet: Query = typeof action.payload === 'string' 
-          ? { 
-              id: `temp-${Date.now()}`, 
-              name: 'Custom Query', 
-              queryText: action.payload, 
-              sampleData: [] 
-            }
-          : action.payload;
-  
-        return {
-          ...state,
-          currentQuery: queryToSet,
-          queryExplanation: explainQuery(queryToSet.queryText),
-          queryHistory: [
-            queryToSet,
-            ...state.queryHistory.filter(q => q.queryText !== queryToSet.queryText)
-          ].slice(0, 4),
-          error: null
-        };
 
     case 'RUN_QUERY': {
       if (!state.currentQuery) {
         return { ...state, error: 'No query to execute', isLoading: false };
       }
 
-      // console.log('Current Query:', state.currentQuery);
-      const simulationResults = QuerySimulator.executeQuery(state.currentQuery);
-      // console.log('Simulation Results:', simulationResults);
 
+      const simulationResults = QuerySimulator.executeQuery(state.currentQuery);
 
       const updatedHistory = [
         state.currentQuery,
@@ -80,7 +73,6 @@ function queryReducer(state: QueryState, action: QueryAction): QueryState {
         error: simulationResults.data.length === 0 ? 'No results found' : null
       };
     }
-
 
     case 'SAVE_QUERY':
       return {
@@ -122,8 +114,37 @@ export const QueryContext = createContext<QueryContextType>({
 export const QueryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(queryReducer, initialState);
 
+  const enhancedDispatch = (action: QueryAction) => {
+    switch (action.type) {
+      case 'SET_CURRENT_QUERY':
+        toast.success('Query set successfully', {
+          position: 'bottom-right',
+          duration: 1000,
+        });
+        break;
+      case 'RUN_QUERY':
+
+        if (state.currentQuery) {
+          const simulationResults = QuerySimulator.executeQuery(state.currentQuery);
+          simulationResults.data.length === 0
+            ? toast.error('No results found')
+            : toast.success('Query executed successfully');
+        }
+        break;
+      case 'SET_ERROR':
+        toast.error(action.payload, {
+          position: 'bottom-right',
+          duration: 2000,
+        });
+        break;
+    }
+
+    dispatch(action);
+  };
+
   return (
-    <QueryContext.Provider value={{ state, dispatch }}>
+    <QueryContext.Provider value={{ state, dispatch: enhancedDispatch }}>
+      <Toaster />
       {children}
     </QueryContext.Provider>
   );

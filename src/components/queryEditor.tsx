@@ -143,7 +143,7 @@ const QueryEditor: React.FC = () => {
         </button>
 
         {state.isLoading && <div className="query-editor-loading" />}
-        {state.error && <div className="query-editor-error">{state.error}</div>}
+       
 
         <div className="keyboard-shortcuts-hint">
           Default Shortcuts: Ctrl/Cmd + Enter or F5 to run query
@@ -151,12 +151,12 @@ const QueryEditor: React.FC = () => {
       </div>
 
       {isConfigOpen && (
-        <div className="shortcuts-config">
+        <div className="shortcuts-config add-shortcut-form">
           <h3>Custom Shortcuts</h3>
 
 
-          <div className="add-shortcut-form">
             <select
+             className="add-shortcut-form"
               value={newShortcut.modifier || ''}
               onChange={(e) => setNewShortcut({
                 ...newShortcut,
@@ -171,6 +171,7 @@ const QueryEditor: React.FC = () => {
             </select>
 
             <input
+             className="add-shortcut-form"
               type="text"
               placeholder="Key (e.g., R)"
               maxLength={1}
@@ -182,6 +183,7 @@ const QueryEditor: React.FC = () => {
             />
 
             <select
+             className="add-shortcut-form"
               value={newShortcut.action || ''}
               onChange={(e) => setNewShortcut({
                 ...newShortcut,
@@ -193,7 +195,7 @@ const QueryEditor: React.FC = () => {
             </select>
 
             <button onClick={addCustomShortcut}>Add Shortcut</button>
-          </div>
+          
 
 
           <div className="shortcuts-list">

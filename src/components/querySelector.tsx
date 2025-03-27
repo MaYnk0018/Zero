@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useQueryContext } from '../context/queryContext';
 import './querySelector.css';
 import { Query } from '..';
@@ -19,7 +20,6 @@ const QuerySelector: React.FC = () => {
   const { state, dispatch } = useQueryContext();
   const { queryHistory } = state;
   
-  
   const [predefinedQueries, setPredefinedQueries] = useState<Query[]>(initialPredefinedQueries);
 
   const handleQuerySelect = (query: Query) => {
@@ -39,7 +39,6 @@ const QuerySelector: React.FC = () => {
     const queryExists = predefinedQueries.some(q => q.queryText === queryText);
     
     if (!queryExists) {
-      
       const newQuery: Query = {
         id: `query-${Date.now()}`,
         name: `Custom Query ${predefinedQueries.length + 1}`,
@@ -47,15 +46,26 @@ const QuerySelector: React.FC = () => {
         sampleData: [] 
       };
 
-     
       setPredefinedQueries(prevQueries => [...prevQueries, newQuery]);
+      
+      toast.success('Query added to regular queries', {
+        position: 'bottom-right',
+        duration: 2000,
+      });
+    } else {
+      toast.error('Query already exists in regular queries', {
+        position: 'bottom-right',
+        duration: 2000,
+      });
     }
+
+    
   };
 
   return (
     <div className="query-selector">
       <h2 className="sidebar-heading">Query Library</h2>
-      <h2 className="query-selector-title">Regualar Queries</h2>
+      <h2 className="query-selector-title">Regular Queries</h2>
       <div className="query-selector-buttons">
         {predefinedQueries.map((query, index) => (
           <button

@@ -1,19 +1,35 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQueryContext } from '../context/queryContext';
 import { exportToCSV } from '../utility/dataProcessing';
 import './resultTable.css';
 
 const ResultTable: React.FC = () => {
   const { state } = useQueryContext();
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const toggleFullScreen = () => {
+    setIsFullScreen(!isFullScreen);
+  };
 
   const renderedResults = useMemo(() => {
     if (!state.results) return null;
-
+    
     return (
-      <div className='main-result-table'>
+      <div 
+        className={`main-result-table ${isFullScreen ? 'full-screen' : ''}`}
+      >
+        
         <div className="result-table">
-          {/* <div className='table-wrapper'> */}
-          <table className="result-table-table">
+        <div className="result-table-header-actions">
+          <button 
+            onClick={toggleFullScreen} 
+            className="result-table-fullscreen-btn"
+          >
+            {isFullScreen ? 'Exit Full Screen' : 'View Full Screen'}
+          </button>
+        </div>
+        <div className="result-table-table">
+          <table className="tablell">
             <thead>
               <tr>
                 {state.results.columns.map((col, idx) => (
@@ -21,6 +37,7 @@ const ResultTable: React.FC = () => {
                     {col}
                   </th>
                 ))}
+                <th className="result-table-header">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -33,11 +50,22 @@ const ResultTable: React.FC = () => {
                         : row[col]}
                     </td>
                   ))}
+                  <td className="result-table-cell">
+                    <button 
+                      onClick={() => {
+                        console.log('Action clicked for row', rowIdx);
+                      }}
+                      className="result-table-action-btn"
+                    >
+                      Action
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {/* </div> */}
+        </div>
+          
         </div>
         <div className="result-table-footer">
           <span>Total Rows: {state.results.data.length}</span>
@@ -50,10 +78,9 @@ const ResultTable: React.FC = () => {
         </div>
       </div>
     );
-  }, [state.results]);
+  }, [state.results, isFullScreen]);
 
   if (!state.results) return null;
-
   return renderedResults;
 };
 
