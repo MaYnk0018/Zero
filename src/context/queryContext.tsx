@@ -46,7 +46,6 @@ function queryReducer(state: QueryState, action: QueryAction): QueryState {
         currentQuery: queryToSet,
         queryExplanation: explainQuery(queryToSet.queryText),
         queryHistory: [
-          queryToSet,
           ...state.queryHistory.filter(q => q.queryText !== queryToSet.queryText)
         ].slice(0, 4),
         error: null

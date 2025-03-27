@@ -37,7 +37,6 @@ const ResultTable: React.FC = () => {
                     {col}
                   </th>
                 ))}
-                <th className="result-table-header">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -50,16 +49,6 @@ const ResultTable: React.FC = () => {
                         : row[col]}
                     </td>
                   ))}
-                  <td className="result-table-cell">
-                    <button 
-                      onClick={() => {
-                        console.log('Action clicked for row', rowIdx);
-                      }}
-                      className="result-table-action-btn"
-                    >
-                      Action
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
