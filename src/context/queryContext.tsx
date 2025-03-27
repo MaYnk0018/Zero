@@ -45,8 +45,29 @@ function queryReducer(state: QueryState, action: QueryAction): QueryState {
         ...state,
         currentQuery: queryToSet,
         queryExplanation: explainQuery(queryToSet.queryText),
+        // queryHistory: [
+        //   ...state.queryHistory.filter(q => q.queryText !== queryToSet.queryText)
+        // ].slice(0, 4),
+        error: null
+      };
+    case 'SET_TEXT':
+
+      const querySet: Query = typeof action.payload === 'string'
+        ? {
+          id: `temp-${Date.now()}`,
+          name: 'Custom Query',
+          queryText: action.payload,
+          sampleData: []
+        }
+        : action.payload;
+
+      return {
+        ...state,
+        currentQuery: querySet,
+        queryExplanation: explainQuery(querySet.queryText),
         queryHistory: [
-          ...state.queryHistory.filter(q => q.queryText !== queryToSet.queryText)
+          querySet,
+          ...state.queryHistory.filter(q => q.queryText !== querySet.queryText)
         ].slice(0, 4),
         error: null
       };

@@ -31,7 +31,7 @@ const QuerySelector: React.FC = () => {
 
   const handleAddFromHistory = (queryText: string) => {
     dispatch({
-      type: 'SET_QUERY_TEXT',
+      type: 'SET_TEXT',
       payload: queryText
     });
 

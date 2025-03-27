@@ -35,7 +35,8 @@ export type QueryActionType =
     | 'CLEAR_RESULTS'
     | 'SET_ERROR'
     | 'SET_LOADING'
-    | 'ADD_TO_QUERY_HISTORY';
+    | 'ADD_TO_QUERY_HISTORY'
+    | 'SET_TEXT';
 
 export interface QueryAction {
     type: QueryActionType;
