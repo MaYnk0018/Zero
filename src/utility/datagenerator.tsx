@@ -35,15 +35,6 @@ export class QuerySimulator {
     employees: this.generateRepeatedData(defaultEmployees, 50)
   };
 
-  static updateDatasets(count: number = 50) {
-    this.datasets = {
-      customers: this.generateRepeatedData(defaultCustomers, count),
-      products: this.generateRepeatedData(defaultProducts, count),
-      sales: this.generateRepeatedData(defaultSales, count),
-      employees: this.generateRepeatedData(defaultEmployees, count)
-    };
-  }
-
   static executeQuery(xc: Query): { columns: string[], data: any[] } {
     const { queryText } = xc;
     // console.log('Executing query:', queryText);
