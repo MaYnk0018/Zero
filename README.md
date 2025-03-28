@@ -7,9 +7,42 @@ Can add to regular Queries by history add button,
 
 ## Screenshot
 
-- ![Frontend](./src/assets/image2.png/) 
+- ![Frontend](./src/assets/image.png/) 
 - ![responsive for all device](./src/assets/image3.png/) 
 
+
+## Performance Measuring function
+   const PerformanceTracker: React.FC = () => {
+   const [loadTime, setLoadTime] = useState<number | null>(null);
+
+   useEffect(() => {
+      const startTime = performance.now();
+
+      const calculateLoadTime = () => {
+         const endTime = performance.now();
+         const duration = Math.round(endTime - startTime);
+         setLoadTime(duration);
+      };
+
+      window.addEventListener('load', calculateLoadTime);
+      
+      
+      const timer = setTimeout(calculateLoadTime, 1000);
+
+      return () => {
+         window.removeEventListener('load', calculateLoadTime);
+         clearTimeout(timer);
+      };
+   }, []);
+
+   if (!loadTime) return null;
+
+   return (
+      <div>
+         Load Time: {loadTime} ms
+      </div>
+   );
+};
 
 
 ## Key Features
@@ -64,7 +97,7 @@ Can add to regular Queries by history add button,
 
 ## Performance Metrics
 - performance Optimization: 86% → 100%
-- ![Score](./src/assets/image.png/) 
+- ![Score](./src/assets/image5.png/) 
 - loading time using lighthouse
 - ![](./src/assets/image4.png/) 
 
