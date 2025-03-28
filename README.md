@@ -1,45 +1,54 @@
 # SQL Query Editor: React + TypeScript + Vite Project
 
 ## Project Overview
-A powerful, feature-rich SQL query editor application built with modern web technologies, designed to enhance developer productivity and provide a seamless query writing experience.
-Can add to regular Queries by history add button,
-
+A powerful, feature-rich SQL query editor application built with modern web technologies, designed to enhance developer productivity and provide a seamless query writing experience.  
+Users can also add queries to the regular queries list using the history "Add" button.
 
 ## Screenshot
+- ![Frontend](./src/assets/image.png/)
+- ![Responsive for all devices](./src/assets/image3.png/)
 
-- ![Frontend](./src/assets/image.png/) 
-- ![responsive for all device](./src/assets/image3.png/) 
+## Performance Measuring Function
+The application includes a performance tracker that measures the load time of the app.  
+Below is the complete implementation:
 
+```tsx
+import React, { useState, useEffect } from 'react';
 
-## Performance Measuring function
+const PerformanceTracker: React.FC = () => {
+  const [loadTime, setLoadTime] = useState<number | null>(null);
 
-   
-   const PerformanceTracker: React.FC = () => {
-   const [loadTime, setLoadTime] = useState<number | null>(null);
-   useEffect(() => {
-      const startTime = performance.now();
-      const calculateLoadTime = () => {
-         const endTime = performance.now();
-         const duration = Math.round(endTime - startTime);
-         setLoadTime(duration);
-      };
-      window.addEventListener('load', calculateLoadTime);   
-      const timer = setTimeout(calculateLoadTime, 1000);
-      return () => {
-         window.removeEventListener('load', calculateLoadTime);
-         clearTimeout(timer);
-      };
-   }, []);
+  useEffect(() => {
+    const startTime = performance.now();
 
-   if (!loadTime) return null;
+    const calculateLoadTime = () => {
+      const endTime = performance.now();
+      const duration = Math.round(endTime - startTime);
+      setLoadTime(duration);
+    };
 
-   return (
-      <div>
-         Load Time: {loadTime} ms
-      </div>
-   );
+    window.addEventListener('load', calculateLoadTime);
+    
+    // Fallback in case load event doesn't fire within 1 second
+    const timer = setTimeout(calculateLoadTime, 1000);
+
+    return () => {
+      window.removeEventListener('load', calculateLoadTime);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  if (!loadTime) return null;
+
+  return (
+    <div>
+      Load Time: {loadTime} ms
+    </div>
+  );
 };
 
+export default PerformanceTracker;
+```
 
 ## Key Features
 
