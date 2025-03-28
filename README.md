@@ -14,7 +14,6 @@ Can add to regular Queries by history add button,
 ## Performance Measuring function
    const PerformanceTracker: React.FC = () => {
    const [loadTime, setLoadTime] = useState<number | null>(null);
-
    useEffect(() => {
       const startTime = performance.now();
 
