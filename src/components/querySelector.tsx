@@ -19,7 +19,7 @@ const initialPredefinedQueries: Query[] = [
 const QuerySelector: React.FC = () => {
   const { state, dispatch } = useQueryContext();
   const { queryHistory } = state;
-  
+
   const [predefinedQueries, setPredefinedQueries] = useState<Query[]>(initialPredefinedQueries);
 
   const handleQuerySelect = (query: Query) => {
@@ -35,19 +35,19 @@ const QuerySelector: React.FC = () => {
       payload: queryText
     });
 
-    
+
     const queryExists = predefinedQueries.some(q => q.queryText === queryText);
-    
+
     if (!queryExists) {
       const newQuery: Query = {
         id: `query-${Date.now()}`,
         name: `Custom Query ${predefinedQueries.length + 1}`,
         queryText: queryText,
-        sampleData: [] 
+        sampleData: []
       };
 
       setPredefinedQueries(prevQueries => [...prevQueries, newQuery]);
-      
+
       toast.success('Query added to regular queries', {
         position: 'bottom-right',
         duration: 2000,
@@ -59,7 +59,7 @@ const QuerySelector: React.FC = () => {
       });
     }
 
-    
+
   };
 
   return (
@@ -77,11 +77,11 @@ const QuerySelector: React.FC = () => {
           </button>
         ))}
       </div>
+      <h2 className="query-selector-title">Query History</h2>
 
       <div className="query-history-section">
-        <div className="query-history-header">
-          <h2 className="query-history-title">Query History</h2>
-        </div>
+
+
         {queryHistory.length > 0 ? (
           <div className="query-history">
             <ul className="query-history-list">

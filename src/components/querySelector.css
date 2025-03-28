@@ -30,6 +30,8 @@
 .query-selector-buttons {
   display: flex;
   flex-wrap: wrap;
+  max-height: 30vh;
+  overflow: auto;
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -52,7 +54,9 @@
   background-color: #B9E5E8;
   padding: 12px;
   overflow-y: auto; 
-  min-height: 200px;
+  max-height: 35vh;
+  overflow: auto;
+  /* min-height: 200px; */
   display: flex;
   flex-direction: column;
 }
