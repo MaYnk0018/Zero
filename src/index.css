@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -5,8 +6,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-body,
-html {
+body, html {
   height: 100%;
   font-family: 'Poppins', sans-serif;
   background-color: #f9f9f9;
@@ -14,85 +14,114 @@ html {
   line-height: 1.6;
 }
 
+/* Desktop Layout */
 .app-container {
   height: 100vh;
   display: flex;
   overflow: hidden;
-  grid-template-columns: 30% 70%;
-  grid-template-rows: 100vh;
 }
 
-.sidebar {
-  background-color: #DFF2EB;
-  min-width: 200px;
-  max-width: 390px;
-  grid-column: 1;
-  grid-row: 1;
+.content-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidebar-container {
+  background-color: #f4f4f4;
+  position: relative;
+  transition: width 0.3s ease;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
 }
 
 .main-content {
-  width: 100vw;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   overflow: hidden;
-  gap: 10px;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.right-top, .right-bottom {
+  flex: 1;
+  overflow: auto;
+  padding: 10px;
 }
 
 .right-top {
-  overflow: hidden;
-  background-color: #4A628A; 
-  grid-column: 2;
-  grid-row: 1;
-  height: fit-content;
+  background-color: #4A628A;
 }
 
 .right-bottom {
-  background-color: #7AB2D3; 
-  grid-column: 2;
-  grid-row: 2;
-  overflow: auto;
-  height: fit-content;
-
+  background-color: #7AB2D3;
 }
+
+.toggle-sidebar-button {
+  position: absolute;
+  top: 10px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #7AB2D3;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+
+.toggle-sidebar-button:hover {
+  background-color: #4A628A;
+}
+
 
 @media screen and (max-width: 768px) {
   .app-container {
-    display:grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto; 
   }
-  .sidebar {
-    grid-column: 1;
-    grid-row: 1;
-    max-width: fit-content;
+
+  .content-container {
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
   }
-  .right-top {
-    grid-column: 1;
-    grid-row: 2;
+
+  .sidebar-container {
+    width: 100% !important;
+    order: -1; 
+    max-height: none;
+    overflow: visible;
+    position: static;
   }
-  .right-bottom {
-    grid-column: 1;
-    grid-row: 3;
-    height: fit-content;
-    padding: 20px;
-    text-align: left;
-    border: 1px solid #ccc;
+
+  .toggle-sidebar-button {
+    position: static;
+    margin: 10px auto;
+    display: block;
+    right: auto;
+    top: auto;
   }
+
   .main-content {
-    height: fit-content;
-    overflow: hidden;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
   }
-  .app-container {
-    overflow: auto;
-  }
-  .sidebar,
-  .right-top,
+
+  .right-top, 
   .right-bottom {
-    padding: 20px;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    color: #333;
-    font-size: 18px;
-    border: 1px solid #ccc;
+    height: auto;
+    max-height: none;
+    overflow: visible;
   }
 }
