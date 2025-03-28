@@ -12,22 +12,19 @@ Can add to regular Queries by history add button,
 
 
 ## Performance Measuring function
+
+   
    const PerformanceTracker: React.FC = () => {
    const [loadTime, setLoadTime] = useState<number | null>(null);
    useEffect(() => {
       const startTime = performance.now();
-
       const calculateLoadTime = () => {
          const endTime = performance.now();
          const duration = Math.round(endTime - startTime);
          setLoadTime(duration);
       };
-
-      window.addEventListener('load', calculateLoadTime);
-      
-      
+      window.addEventListener('load', calculateLoadTime);   
       const timer = setTimeout(calculateLoadTime, 1000);
-
       return () => {
          window.removeEventListener('load', calculateLoadTime);
          clearTimeout(timer);
