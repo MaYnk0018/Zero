@@ -63,9 +63,7 @@ Can add to regular Queries by history add button,
 - Used Lighthouse optimization guid help
 
 ## Performance Metrics
-- Initial Load Time Optimization: 86% → 96%
-- ![Lighthouse Score](./src/assets/image1.png/)
-- Optimized to
+- performance Optimization: 86% → 100%
 - ![Score](./src/assets/image.png/) 
 - loading time using lighthouse
 - ![](./src/assets/image4.png/) 
