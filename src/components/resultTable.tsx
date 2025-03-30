@@ -8,7 +8,15 @@ const ResultTable: React.FC = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen);
+    setIsFullScreen((prev) => {
+      const newVal = !prev;
+      if (newVal) {
+        document.body.classList.add('fullscreen-active');
+      } else {
+        document.body.classList.remove('fullscreen-active');
+      }
+      return newVal;
+    });
   };
 
   const renderedResults = useMemo(() => {
