@@ -52,20 +52,38 @@ export default PerformanceTracker;
 
 ## Key Features
 
-### 1. Customizable Keyboard Shortcuts
+### 1. Multi-Editor Support
+- Multiple query editors in tabs
+- Independent state for each editor
+- Easy switching between editors
+- Ability to add new editor tabs dynamically
+
+### 2. Query Library System
+- Save frequently used queries
+- Quick access to regular queries
+- View and reuse query history
+- Add queries from history to regular queries
+
+### 3. Customizable Keyboard Shortcuts
 - Flexible key binding system
 - Users can create personalized keyboard shortcuts
 - Support for modifier keys (Ctrl, Alt, Cmd, Shift)
 - Default shortcuts for quick query execution
 
-### 2. Query Management & explanation
+### 4. Query Management & explanation
 - Real-time query text editing
 - Query history tracking (up to 4 recent queries)
 - Persistent storage of custom shortcuts
 - Explanation generation for SQL queries
 - Added query explanations for default queries
 
-### 3. Performance Optimizations
+### 5. Enhanced State Management
+- Separate state for each editor instance
+- Persistent query history per editor
+- Independent query execution contexts
+- Synchronized sidebar with active editor
+
+### 6. Performance Optimizations
 - Lightweight SVG icon usage
 - Optimized rendering with React hooks -> useMemo, usecallback
 - Efficient state management using React Context and useReducer
@@ -129,6 +147,12 @@ export default PerformanceTracker;
 - Integration with multiple database types
 - Advanced query explanation engine
 
+## Recent Updates
+- Added multi-editor support with tabbed interface
+- Implemented independent state management per editor
+- Added query library with save functionality
+- Enhanced sidebar to work with active editor
+- Improved query history management
 
 ## Notes for Interviewer
 This project demonstrates:

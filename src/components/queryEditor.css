@@ -92,7 +92,7 @@
   color: white;
 }
 
-/* Popup overlay */
+
 .shortcuts-popup-overlay {
   position: fixed;
   top: 0;
@@ -231,7 +231,7 @@
 .keyboard-shortcuts-hint {
   margin-top: 10px;
   font-size: 0.8rem;
-  color: #777;
+  color: black;
 }
 
 @keyframes spin {

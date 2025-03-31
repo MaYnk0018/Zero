@@ -4,62 +4,30 @@ import { useQueryContext } from '../context/queryContext';
 import './querySelector.css';
 import { Query } from '..';
 
+interface QuerySelectorProps {
+  editorId: number;
+}
+
 const initialPredefinedQueries: Query[] = [
   {
     id: 'q1',
     name: 'Top 10 Customers',
     queryText: 'SELECT * FROM customers ORDER BY total_purchases DESC LIMIT 10',
-    sampleData: [
-      { id: 1, name: 'John Doe', total_purchases: 5000 },
-      { id: 2, name: 'Jane Smith', total_purchases: 4500 },
-    ]
+    sampleData: []
   },
 ];
 
-const QuerySelector: React.FC = () => {
-  const { state, dispatch } = useQueryContext();
+const QuerySelector: React.FC<QuerySelectorProps> = ({ editorId }) => {
+  const { state, dispatch } = useQueryContext(editorId);
   const { queryHistory } = state;
-
-  const [predefinedQueries, setPredefinedQueries] = useState<Query[]>(initialPredefinedQueries);
+  const [predefinedQueries] = useState<Query[]>(initialPredefinedQueries);
 
   const handleQuerySelect = (query: Query) => {
     dispatch({
       type: 'SET_QUERY_TEXT',
-      payload: query.queryText
+      payload: query
     });
-  };
-
-  const handleAddFromHistory = (queryText: string) => {
-    dispatch({
-      type: 'SET_TEXT',
-      payload: queryText
-    });
-
-
-    const queryExists = predefinedQueries.some(q => q.queryText === queryText);
-
-    if (!queryExists) {
-      const newQuery: Query = {
-        id: `query-${Date.now()}`,
-        name: `Custom Query ${predefinedQueries.length + 1}`,
-        queryText: queryText,
-        sampleData: []
-      };
-
-      setPredefinedQueries(prevQueries => [...prevQueries, newQuery]);
-
-      toast.success('Query added to regular queries', {
-        position: 'bottom-right',
-        duration: 2000,
-      });
-    } else {
-      toast.error('Query already exists in regular queries', {
-        position: 'bottom-right',
-        duration: 2000,
-      });
-    }
-
-
+    toast.success('Query selected', { duration: 1500 });
   };
 
   return (
@@ -67,21 +35,19 @@ const QuerySelector: React.FC = () => {
       <h2 className="sidebar-heading">Query Library</h2>
       <h2 className="query-selector-title">Regular Queries</h2>
       <div className="query-selector-buttons">
-        {predefinedQueries.map((query, index) => (
+        {predefinedQueries.map((query) => (
           <button
-            key={index}
+            key={query.id}
             onClick={() => handleQuerySelect(query)}
             className="query-selector-button"
           >
-            {query.queryText}
+            {query.name}
           </button>
         ))}
       </div>
+
       <h2 className="query-selector-title">Query History</h2>
-
       <div className="query-history-section">
-
-
         {queryHistory.length > 0 ? (
           <div className="query-history">
             <ul className="query-history-list">
@@ -91,9 +57,9 @@ const QuerySelector: React.FC = () => {
                     <span className="query-history-text">{query.queryText}</span>
                     <button
                       className="history-add-button"
-                      onClick={() => handleAddFromHistory(query.queryText)}
+                      onClick={() => handleQuerySelect(query)}
                     >
-                      Add
+                      Use
                     </button>
                   </div>
                 </li>

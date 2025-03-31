@@ -8,6 +8,10 @@ import {
 } from '../index';
 import { QuerySimulator, explainQuery } from '../utility/datagenerator';
 
+interface EditorStates {
+  [editorId: number]: QueryState;
+}
+
 const initialState: QueryState = {
   currentQuery: null,
   queryHistory: [],
@@ -17,6 +21,8 @@ const initialState: QueryState = {
   error: null,
   queryExplanation: null
 };
+
+const initialEditorStates: EditorStates = {};
 
 function queryReducer(state: QueryState, action: QueryAction): QueryState {
   switch (action.type) {
@@ -126,54 +132,39 @@ function queryReducer(state: QueryState, action: QueryAction): QueryState {
   }
 }
 
-export const QueryContext = createContext<QueryContextType>({
-  state: initialState,
+export const QueryContext = createContext<{
+  state: EditorStates;
+  dispatch: (editorId: number, action: QueryAction) => void;
+}>({
+  state: initialEditorStates,
   dispatch: () => null
 });
 
 export const QueryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(queryReducer, initialState);
+  const [state, setStates] = React.useState<EditorStates>(initialEditorStates);
 
-  const enhancedDispatch = (action: QueryAction) => {
-    switch (action.type) {
-      case 'SET_CURRENT_QUERY':
-        toast.success('Query set successfully', {
-          position: 'bottom-right',
-          duration: 1000,
-        });
-        break;
-      case 'RUN_QUERY':
-
-        if (state.currentQuery) {
-          const simulationResults = QuerySimulator.executeQuery(state.currentQuery);
-          simulationResults.data.length === 0
-            ? toast.error('No results found')
-            : toast.success('Query executed successfully');
-        }
-        break;
-      case 'SET_ERROR':
-        toast.error(action.payload, {
-          position: 'bottom-right',
-          duration: 2000,
-        });
-        break;
-    }
-
-    dispatch(action);
+  const dispatch = (editorId: number, action: QueryAction) => {
+    setStates(prevStates => ({
+      ...prevStates,
+      [editorId]: queryReducer(prevStates[editorId] || initialState, action)
+    }));
   };
 
   return (
-    <QueryContext.Provider value={{ state, dispatch: enhancedDispatch }}>
-      <Toaster />
+    <QueryContext.Provider value={{ state, dispatch }}>
       {children}
     </QueryContext.Provider>
   );
 };
 
-export const useQueryContext = () => {
+export const useQueryContext = (editorId: number) => {
   const context = useContext(QueryContext);
   if (!context) {
     throw new Error('useQueryContext must be used within a QueryProvider');
   }
-  return context;
+
+  const editorState = context.state[editorId] || initialState;
+  const editorDispatch = (action: QueryAction) => context.dispatch(editorId, action);
+
+  return { state: editorState, dispatch: editorDispatch };
 };

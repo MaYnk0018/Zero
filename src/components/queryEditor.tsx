@@ -9,8 +9,12 @@ interface CustomShortcut {
   action: 'RUN_QUERY' | string;
 }
 
-const QueryEditor: React.FC = () => {
-  const { state, dispatch } = useQueryContext();
+interface QueryEditorProps {
+  editorId: number;
+}
+
+const QueryEditor: React.FC<QueryEditorProps> = ({ editorId }) => {
+  const { state, dispatch } = useQueryContext(editorId);
   const [queryText, setQueryText] = useState(state.currentQuery?.queryText || '');
   const [customShortcuts, setCustomShortcuts] = useState<CustomShortcut[]>([]);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
@@ -100,7 +104,6 @@ const QueryEditor: React.FC = () => {
     };
   }, [handleRunQuery, customShortcuts]);
 
-  // Close popup when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const popup = document.getElementById('shortcuts-popup');

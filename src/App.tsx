@@ -1,64 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { QueryProvider } from './context/queryContext';
-import QueryEditor from './components/queryEditor';
 import QuerySelector from './components/querySelector';
-import ResultTable from './components/resultTable';
+import EditorPanel from './components/editorPanel';
+import { PerformanceTracker } from './utility/performanceTracker';
 import './index.css';
 
-const PerformanceTracker: React.FC = () => {
-  const [loadTime, setLoadTime] = useState<number | null>(null);
-
-  useEffect(() => {
-    const startTime = performance.now();
-
-    const calculateLoadTime = () => {
-      const endTime = performance.now();
-      const duration = Math.round(endTime - startTime);
-      setLoadTime(duration);
-    };
-
-    window.addEventListener('load', calculateLoadTime);
-    
-    
-    const timer = setTimeout(calculateLoadTime, 1000);
-
-    return () => {
-      window.removeEventListener('load', calculateLoadTime);
-      clearTimeout(timer);
-    };
-  }, []);
-
-  if (!loadTime) return null;
-
-  return (
-    <div 
-      style={{
-        position: 'fixed',
-        top: 10,
-        right: 10,
-        backgroundColor: 'rgba(0,0,0,0.7)',
-        color: 'white',
-        padding: '5px 10px',
-        borderRadius: '5px',
-        zIndex: 1000,
-        fontSize: '12px'
-      }}
-    >
-      Load Time: {loadTime} ms
-    </div>
-  );
-};
-
+interface Editor {
+  id: number;
+  name: string;
+}
 
 const App: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState(true);
+  const [editors, setEditors] = useState<Editor[]>([{ id: 1, name: 'Editor 1' }]);
+  const [activeEditor, setActiveEditor] = useState<number>(1);
 
   const sidebarWidth = showSidebar ? 250 : 50;
+
+  const addEditor = () => {
+    const newId = editors.length + 1;
+    setEditors(prev => [...prev, { id: newId, name: `Editor ${newId}` }]);
+    setActiveEditor(newId);
+  };
 
   return (
     <QueryProvider>
       <PerformanceTracker />
-
       <div className="app-container">
         <div className="content-container">
           <div
@@ -66,10 +33,10 @@ const App: React.FC = () => {
             style={{
               width: `${sidebarWidth}px`,
               minWidth: `${sidebarWidth}px`,
-              flexShrink: 0
+              flexShrink: 0,
             }}
           >
-            {showSidebar && <QuerySelector />}
+            {showSidebar && <QuerySelector editorId={activeEditor} />}
             <button
               className="toggle-sidebar-button"
               onClick={() => setShowSidebar(prev => !prev)}
@@ -77,18 +44,29 @@ const App: React.FC = () => {
               {showSidebar ? '<' : '>'}
             </button>
           </div>
-          <div
-            className="main-content"
-            style={{ 
-              flex: 1,
-              overflow: 'hidden'
-            }}
-          >
-            <div className="right-top">
-              <QueryEditor />
+          <div className="main-content">
+          
+            <div className="editor-tabs">
+              {editors.map(editor => (
+                <div
+                  key={editor.id}
+                  className={`editor-tab ${activeEditor === editor.id ? 'active' : ''}`}
+                  onClick={() => setActiveEditor(editor.id)}
+                >
+                  {editor.name}
+                </div>
+              ))}
+              <div className="editor-tab add-tab" onClick={addEditor}>
+                +
+              </div>
             </div>
-            <div className="right-bottom">
-              <ResultTable />
+         
+            <div className="editor-content">
+              {editors.map(editor =>
+                editor.id === activeEditor ? (
+                  <EditorPanel key={editor.id} editorId={editor.id} />
+                ) : null
+              )}
             </div>
           </div>
         </div>
