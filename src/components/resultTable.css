@@ -5,12 +5,12 @@
 .result-table {
   /* margin-top: 5px; */
   height: 30vh;
-  z-index: 1000;
+  /* z-index: 1000; */
  
 }
 
 .main-result-table {
-  z-index: 1000;
+  /* z-index: 1000; */
   display: flex;
   overflow: hidden;
   flex-direction: column;
@@ -34,12 +34,12 @@
 
 .main-result-table.full-screen .result-table {
   height: 100vh;
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
 .main-result-table.full-screen .result-table .result-table-table {
   height: calc(100vh - 100px);
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
 .result-table-header-actions {
@@ -118,13 +118,13 @@ width:100vw;
 @media screen and (max-width: 1100px) and (min-width: 768px) {
   .result-table-table {
     height: calc(100vh - 450px);
-    z-index: 200;
+    /* z-index: 200; */
   }
   .main-result-table {
    min-height: calc(100vh - 400px)
   }
   .full-screen{
-    z-index: 2000;
+    /* z-index: 2000; */
   }
 }
 

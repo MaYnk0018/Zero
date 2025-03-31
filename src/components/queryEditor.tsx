@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useQueryContext } from '../context/queryContext';
 import './queryEditor.css';
 
-
 interface CustomShortcut {
   id: string;
   key: string;
@@ -17,20 +16,18 @@ const QueryEditor: React.FC = () => {
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [newShortcut, setNewShortcut] = useState<Partial<CustomShortcut>>({});
 
-
-
   useEffect(() => {
     const savedShortcuts = localStorage.getItem('customQueryShortcuts');
     if (savedShortcuts) {
       setCustomShortcuts(JSON.parse(savedShortcuts));
     }
   }, []);
+  
   useEffect(() => {
     if (state.currentQuery?.queryText !== queryText) {
       setQueryText(state.currentQuery?.queryText || '');
     }
   }, [state.currentQuery]);
-
 
   useEffect(() => {
     localStorage.setItem('customQueryShortcuts', JSON.stringify(customShortcuts));
@@ -46,7 +43,6 @@ const QueryEditor: React.FC = () => {
     }, 500);
   }, [dispatch, queryText]);
 
-
   const addCustomShortcut = () => {
     if (newShortcut.key && newShortcut.action) {
       const shortcutToAdd: CustomShortcut = {
@@ -60,15 +56,12 @@ const QueryEditor: React.FC = () => {
     }
   };
 
-
   const removeCustomShortcut = (id: string) => {
     setCustomShortcuts(customShortcuts.filter(shortcut => shortcut.id !== id));
   };
 
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-
       if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
         event.preventDefault();
         handleRunQuery();
@@ -89,7 +82,6 @@ const QueryEditor: React.FC = () => {
         if (modifierPressed && event.key === shortcut.key) {
           event.preventDefault();
 
-
           switch (shortcut.action) {
             case 'RUN_QUERY':
               handleRunQuery();
@@ -107,6 +99,24 @@ const QueryEditor: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleRunQuery, customShortcuts]);
+
+  // Close popup when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const popup = document.getElementById('shortcuts-popup');
+      if (isConfigOpen && popup && !popup.contains(event.target as Node)) {
+        setIsConfigOpen(false);
+      }
+    };
+
+    if (isConfigOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isConfigOpen]);
 
   return (
     <div className="query-editor">
@@ -127,23 +137,24 @@ const QueryEditor: React.FC = () => {
           </div>
         )}
 
-        <button
-          onClick={() => setIsConfigOpen(!isConfigOpen)}
-          className="config-shortcuts-button"
-        >
-          {isConfigOpen ? 'Close Shortcuts' : 'Configure Shortcuts'}
-        </button>
+        <div className="query-editor-controls">
+          <button
+            onClick={handleRunQuery}
+            className="query-editor-button"
+            disabled={queryText.trim() === ''}
+          >
+            Run Query
+          </button>
 
-        <button
-          onClick={handleRunQuery}
-          className="query-editor-button"
-          disabled={queryText.trim() === ''}
-        >
-          Run Query
-        </button>
+          <button
+            onClick={() => setIsConfigOpen(!isConfigOpen)}
+            className="config-shortcuts-button"
+          >
+            Configure Shortcuts
+          </button>
+        </div>
 
         {state.isLoading && <div className="query-editor-loading" />}
-       
 
         <div className="keyboard-shortcuts-hint">
           Default Shortcuts: Ctrl/Cmd + Enter or F5 to run query
@@ -151,61 +162,85 @@ const QueryEditor: React.FC = () => {
       </div>
 
       {isConfigOpen && (
-        <div className="shortcuts-config add-shortcut-form">
-          <h3>Custom Shortcuts</h3>
+        <div className="shortcuts-popup-overlay">
+          <div id="shortcuts-popup" className="shortcuts-popup">
+            <div className="shortcuts-popup-header">
+              <h3>Custom Shortcuts</h3>
+              <button 
+                className="close-popup-button"
+                onClick={() => setIsConfigOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="add-shortcut-form">
+              <select
+                value={newShortcut.modifier || ''}
+                onChange={(e) => setNewShortcut({
+                  ...newShortcut,
+                  modifier: e.target.value as CustomShortcut['modifier']
+                })}
+              >
+                <option value="">No Modifier</option>
+                <option value="ctrlKey">Ctrl</option>
+                <option value="altKey">Alt</option>
+                <option value="metaKey">Cmd</option>
+                <option value="shiftKey">Shift</option>
+              </select>
 
+              <input
+                type="text"
+                placeholder="Key (e.g., R)"
+                maxLength={1}
+                value={newShortcut.key || ''}
+                onChange={(e) => setNewShortcut({
+                  ...newShortcut,
+                  key: e.target.value
+                })}
+              />
 
-            <select
-             className="add-shortcut-form"
-              value={newShortcut.modifier || ''}
-              onChange={(e) => setNewShortcut({
-                ...newShortcut,
-                modifier: e.target.value as CustomShortcut['modifier']
-              })}
-            >
-              <option value="">No Modifier</option>
-              <option value="ctrlKey">Ctrl</option>
-              <option value="altKey">Alt</option>
-              <option value="metaKey">Cmd</option>
-              <option value="shiftKey">Shift</option>
-            </select>
+              <select
+                value={newShortcut.action || ''}
+                onChange={(e) => setNewShortcut({
+                  ...newShortcut,
+                  action: e.target.value
+                })}
+              >
+                <option value="">Select Action</option>
+                <option value="RUN_QUERY">Run Query</option>
+              </select>
 
-            <input
-             className="add-shortcut-form"
-              type="text"
-              placeholder="Key (e.g., R)"
-              maxLength={1}
-              value={newShortcut.key || ''}
-              onChange={(e) => setNewShortcut({
-                ...newShortcut,
-                key: e.target.value
-              })}
-            />
+              <button 
+                className="add-shortcut-button"
+                onClick={addCustomShortcut}
+              >
+                Add Shortcut
+              </button>
+            </div>
 
-            <select
-             className="add-shortcut-form"
-              value={newShortcut.action || ''}
-              onChange={(e) => setNewShortcut({
-                ...newShortcut,
-                action: e.target.value
-              })}
-            >
-              <option value="">Select Action</option>
-              <option value="RUN_QUERY">Run Query</option>
-            </select>
-
-            <button onClick={addCustomShortcut}>Add Shortcut</button>
-          
-
-
-          <div className="shortcuts-list">
-            {customShortcuts.map(shortcut => (
-              <div key={shortcut.id} className="shortcut-item">
-                {shortcut.modifier ? `${shortcut.modifier.replace('Key', '')} + ` : ''}
-                {shortcut.key} : {shortcut.action}
-                <button onClick={() => removeCustomShortcut(shortcut.id)}>Remove</button>
-              </div>
-            ))}
+            <div className="shortcuts-list">
+              {customShortcuts.length > 0 ? (
+                customShortcuts.map(shortcut => (
+                  <div key={shortcut.id} className="shortcut-item">
+                    <span className="shortcut-description">
+                      {shortcut.modifier ? `${shortcut.modifier.replace('Key', '')} + ` : ''}
+                      {shortcut.key} : {shortcut.action}
+                    </span>
+                    <button 
+                      className="remove-shortcut-button"
+                      onClick={() => removeCustomShortcut(shortcut.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <div className="no-shortcuts-message">
+                  No custom shortcuts added yet
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
