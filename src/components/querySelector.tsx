@@ -34,11 +34,27 @@ const QuerySelector: React.FC<QuerySelectorProps> = ({ editorId }) => {
     <div className="query-selector">
       {/* <h2 className="sidebar-heading">Query Library</h2> */}
       <div className="query-history-section">
-        <img 
-          src='src\assets\atlan_icon.jpg' 
-          alt="Query History Placeholder" 
+      
+        <svg 
+          viewBox="0 0 180 60" 
+          xmlns="http://www.w3.org/2000/svg"
           className="query-history-image"
-        />
+        >
+          <rect width="100%" height="100%" fill="#3F37F9"/>
+          <text
+            x="50%"
+            y="50%"
+            fontFamily="Poppins, sans-serif"
+            fontSize="28"
+            fontWeight="bold"
+            fill="#FFFFFF"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            letterSpacing="0.5"
+          >
+            atlan
+          </text>
+        </svg>
       </div>
       <h2 className="query-selector-title">Regular Queries</h2>
       <div className="query-selector-buttons">
@@ -54,7 +70,7 @@ const QuerySelector: React.FC<QuerySelectorProps> = ({ editorId }) => {
       </div>
 
       <h2 className="query-selector-title">Query History</h2>
-      
+            
       <div className="query-history-section">
         {queryHistory.length > 0 ? (
           <div className="query-history">
