@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useReducer } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { createContext, useContext } from 'react';
+
 import {
   QueryState,
   QueryAction,
-  QueryContextType,
   Query
 } from '../index';
 import { QuerySimulator, explainQuery } from '../utility/datagenerator';
