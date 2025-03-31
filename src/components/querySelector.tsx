@@ -32,7 +32,14 @@ const QuerySelector: React.FC<QuerySelectorProps> = ({ editorId }) => {
 
   return (
     <div className="query-selector">
-      <h2 className="sidebar-heading">Query Library</h2>
+      {/* <h2 className="sidebar-heading">Query Library</h2> */}
+      <div className="query-history-section">
+        <img 
+          src='src\assets\atlan_icon.jpg' 
+          alt="Query History Placeholder" 
+          className="query-history-image"
+        />
+      </div>
       <h2 className="query-selector-title">Regular Queries</h2>
       <div className="query-selector-buttons">
         {predefinedQueries.map((query) => (
@@ -47,6 +54,7 @@ const QuerySelector: React.FC<QuerySelectorProps> = ({ editorId }) => {
       </div>
 
       <h2 className="query-selector-title">Query History</h2>
+      
       <div className="query-history-section">
         {queryHistory.length > 0 ? (
           <div className="query-history">

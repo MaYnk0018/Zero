@@ -126,6 +126,14 @@
 .history-add-button:hover {
   background-color: #324753;
 }
+.query-history-section {
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
 
 .query-history-empty {
   /* text-align: center; */
