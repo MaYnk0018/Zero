@@ -27,8 +27,8 @@
 }
 
 .query-editor-explanation {
-  background-color: #B9E5E8;
-  padding: 10px;
+  background-color: #7AB2D3;
+  padding: 5px;
   max-width: fit-content;
   border-radius: 5px;
   margin-top: 10px;
@@ -46,7 +46,7 @@
   font-size: 1rem;
   background-color: #7AB2D3;
   border: none;
-  color: #fff;
+  color: black;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -80,7 +80,7 @@
 .config-shortcuts-button {
   padding: 10px 15px;
   font-size: 1rem;
-  background-color: #B9E5E8;
+  background-color: #7AB2D3;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;

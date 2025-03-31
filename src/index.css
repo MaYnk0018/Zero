@@ -30,7 +30,7 @@ body.fullscreen-active .sidebar-container {
 }
 
 .sidebar-container {
-  background-color: #f4f4f4;
+  background-color: #DFF2EB;
   position: relative;
   transition: width 0.3s ease;
   overflow: visible;
@@ -53,12 +53,17 @@ body.fullscreen-active .sidebar-container {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  background-color: #e0e0e0;
+  background-color: #DFF2EB;
+  /* border-end-end-radius: 5px; */
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
 }
 
 .editor-tab {
   padding: 8px 16px;
   cursor: pointer;
+  border-radius: 10%;
   border-right: 1px solid #ddd;
   transition: background-color 0.3s;
 }
@@ -76,7 +81,9 @@ body.fullscreen-active .sidebar-container {
 .editor-tab.add-tab {
   margin-left: auto;
   font-size: 1.2rem;
-  color: #7AB2D3;
+  font: bold;
+  font-size: larger;
+  color: black;
 }
 
 

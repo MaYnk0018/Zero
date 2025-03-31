@@ -21,7 +21,8 @@
   color: #4A628A;
   top: 0;
   /* z-index: 10; */
-  background-color: #fff;
+  /* margin-bottom: 40px; */
+  background-color: #DFF2EB;
   margin-bottom: 15px;
   text-align: center;
   font-weight: 600;
@@ -37,8 +38,9 @@
 }
 
 .query-selector-button {
-  background-color: #4A628A; 
-  color: white;
+  background-color: #7AB2D3;
+  color: black;
+  font: bold;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
@@ -51,8 +53,8 @@
 
 .query-history-section {
   flex-grow: 1;
-  background-color: #B9E5E8;
-  padding: 12px;
+  background-color: #DFF2EB;
+  /* padding: 12px; */
   overflow-y: auto; 
   max-height: 35vh;
   overflow: auto;
@@ -89,11 +91,12 @@
 }
 
 .query-history-item {
-  background-color: white;
+  background-color: #7AB2D3;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   margin-bottom: 8px;
-  padding: 10px;
+  padding: 5px 10px;
+  color: black;
 }
 
 .query-history-content {
@@ -121,14 +124,14 @@
 }
 
 .history-add-button:hover {
-  background-color: #7AB2D3;
+  background-color: #324753;
 }
 
 .query-history-empty {
-  text-align: center;
-  color: #666;
-  padding: 20px;
-  background-color: white;
+  /* text-align: center; */
+  color: black;
+  padding: 10px;
+  background-color: #DFF2EB;
   border-radius: 4px;
 }
 
