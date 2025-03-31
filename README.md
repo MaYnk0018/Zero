@@ -5,8 +5,8 @@ A powerful, feature-rich SQL query editor application built with modern web tech
 Users can also add queries to the regular queries list using the history "Add" button.
 
 ## Screenshot
-- ![Frontend](./src/assets/image.png/)
-- ![Responsive for all devices](./src/assets/image3.png/)
+- ![Frontend](./src/assets/image3.png/)
+- ![Responsive for all devices](./src/assets/image.png/)
 
 ## Performance Measuring Function
 The application includes a performance tracker that measures the load time of the app.  
